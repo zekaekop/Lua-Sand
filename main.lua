@@ -7,14 +7,22 @@ display_height = 1080
 --
 
 -- Game properties
+
+tileset_image = "Assets/Sprites/Tileset/Tileset.png" -- Width and height must be the same.
+
 time = 1 -- For debuging -- 0 or 1
 game_speed = 1 -- After 100x speed up it starts to lag
 shift = -1
+--
 
 function love.load()
 
+    -- Libs
+    sti = require "Libs/sti"
+    -- --
+
     -- Other Files
-    require("ui")
+    require "ui"
     -- -- 
 
     -- Fonts
@@ -23,8 +31,7 @@ function love.load()
 
     love.window.setMode((display_with * zoom), (display_height * zoom), {resizable = resizable_state, minwidth=400, minheight=300, fullscreen = fullscreen_state})
 
-    -- images = {"sand.png","water.png","stone.png","wire.png","button.png","display.png"}
-    tileset = love.graphics.newImage("Assets/Sprites/sand.png")
+    tileset = love.graphics.newImage(tileset_image)
     tileset:setFilter("nearest","nearest")
     tilesize = 8
 
@@ -34,7 +41,10 @@ function love.load()
     tiles = {}
     tiles[1] = love.graphics.newQuad(0, 0, 8, 8, tileset:getDimensions()) -- Emty
     tiles[2] = love.graphics.newQuad(0, 0, 8, 8, tileset:getDimensions()) -- Sand
-    -- tiles[3] = love.graphics.newQuad(0, 0, 8, 8, tileset:getDimensions()) -- Water
+    tiles[3] = love.graphics.newQuad(8, 0, 8, 8, tileset:getDimensions()) -- Water
+    tiles[4] = love.graphics.newQuad(16, 0, 8, 8, tileset:getDimensions()) -- Metal
+
+    tiles[3] = love.graphics.newQuad(16, 0, 8, 8, tileset:getDimensions()) -- Metal
 end
 
 function love.draw()
