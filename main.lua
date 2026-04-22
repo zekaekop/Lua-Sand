@@ -1,20 +1,40 @@
+-- Window conf
+zoom = 0.5
+fullscreen_state = false -- Fullscreen is not recommended -- Unless you use the correct display_with & display_height according to your display.
+resizable_state = false -- Because the map is generated exactly according to window size.
+display_with = 1920
+display_height = 1080
+--
 
-time = 0 -- for debuging also im not using it rn. you can enable it by turning it on with 1 at the for loop
-game_speed = 2 -- after 100x speed up it starts to lag
+-- Game properties
+time = 1 -- For debuging -- 0 or 1
+game_speed = 1 -- After 100x speed up it starts to lag
 shift = -1
 
 function love.load()
 
+    -- Other Files
+    require("ui")
+    -- -- 
+
+    -- Fonts
+    -- love.graphics.setNewFont("Quicksand/Quicksand-VariableFont_wght")
+    -- --
+
+    love.window.setMode((display_with * zoom), (display_height * zoom), {resizable = resizable_state, minwidth=400, minheight=300, fullscreen = fullscreen_state})
+
+    -- images = {"sand.png","water.png","stone.png","wire.png","button.png","display.png"}
     tileset = love.graphics.newImage("sand.png")
     tileset:setFilter("nearest","nearest")
     tilesize = 8
 
     map = {}
-    map = _generate_map(200,150)
+    map = _generate_map(display_with/8,display_height/8)
 
     tiles = {}
-    tiles[1] = love.graphics.newQuad(0, 0, 8, 8, tileset:getDimensions())
-    tiles[2] = love.graphics.newQuad(0, 0, 8, 8, tileset:getDimensions())
+    tiles[1] = love.graphics.newQuad(0, 0, 8, 8, tileset:getDimensions()) -- Emty
+    tiles[2] = love.graphics.newQuad(0, 0, 8, 8, tileset:getDimensions()) -- Sand
+    -- tiles[3] = love.graphics.newQuad(0, 0, 8, 8, tileset:getDimensions()) -- Water
 end
 
 function love.draw()
@@ -83,15 +103,14 @@ function _tile_transparito(tileid,x,y)
 end
 
 function _zoom()
-    local zoom = 0.5
     love.graphics.scale(zoom,zoom)
 end
 
 function _mouse_to_tile_cords()
     local x,y = love.mouse.getPosition()
 
-    x = x / 0.5
-    y = y / 0.5
+    x = x / zoom
+    y = y / zoom
 
     local tile_x = math.floor(x / tilesize) + 1
     local tile_y = math.floor(y / tilesize) + 1
