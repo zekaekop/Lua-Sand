@@ -24,7 +24,7 @@ function love.load()
     love.window.setMode((display_with * zoom), (display_height * zoom), {resizable = resizable_state, minwidth=400, minheight=300, fullscreen = fullscreen_state})
 
     -- images = {"sand.png","water.png","stone.png","wire.png","button.png","display.png"}
-    tileset = love.graphics.newImage("sand.png")
+    tileset = love.graphics.newImage("Assets/Sprites/sand.png")
     tileset:setFilter("nearest","nearest")
     tilesize = 8
 
